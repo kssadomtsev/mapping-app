@@ -1,0 +1,21 @@
+{
+   "productList":[
+      "CVCD",
+      "SDFD",
+      "DDDF",
+      "SDFD"
+   ],
+   "mapping":{
+      "CVCD":{
+         "version":1,
+         "edition":"X"
+      },
+      "SDFD":{
+         "version":2,
+         "edition":"Z"
+      },
+      "DDDF":{
+         "version":1
+      }
+   }
+}

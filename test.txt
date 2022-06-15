@@ -1,0 +1,4 @@
+1;4;Alice;Jackson;test@test.ru;777-7777777;32;black;1
+2;1;2;brother
+2;2;1;5
+2;3;3;
