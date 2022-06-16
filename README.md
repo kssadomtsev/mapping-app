@@ -33,7 +33,7 @@ Example of source file content:
 }
 ``
 
-Example of output file content:
+Example of output file content (file may absent on file system, rewrites every time after calculation):
 ``
 [{"version":1,"edition":"X","quantity":1},{"version":1,"quantity":1},{"version":2,"edition":"Z","quantity":2}]
 ``
