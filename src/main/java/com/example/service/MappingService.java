@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.dto.ProductFileDto;
+import com.example.model.ProductFileDto;
 import com.example.exception.MappingException;
 import com.example.model.Product;
 import com.example.model.ProductAttribute;
@@ -27,15 +27,17 @@ public class MappingService {
 
     public void map() throws MappingException {
         ProductFileDto productFileDto = fileProcessorService.readSourceFile();
-        List<Product> products = mapProducts(productFileDto.getProductList(), productFileDto.getMapping());
+        List<Product> products = processMapping(productFileDto.getProductList(), productFileDto.getMapping());
         fileProcessorService.writeToOutputFile(products);
     }
 
-    public List<Product> mapProducts(List<String> productList, Map<String, ProductAttribute> mapping) throws MappingException {
-        Map<String, Integer> productCount = new HashMap<>();
-        for (String produceCode : productList) {
-            productCount.merge(produceCode, 1, Integer::sum);
-        }
+    public List<Product> processMapping(List<String> productList, Map<String, ProductAttribute> mapping) throws MappingException {
+        Map<String, Integer> productCount = countProducts(productList);
+        List<Product> result = mapProducts(mapping, productCount);
+        return result.stream().sorted(Comparator.comparing(Product::getVersion)).collect(Collectors.toList());
+    }
+
+    private List<Product> mapProducts(Map<String, ProductAttribute> mapping, Map<String, Integer> productCount) throws MappingException {
         List<Product> result = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : productCount.entrySet()) {
             ProductAttribute productAttribute = mapping.get(entry.getKey());
@@ -44,6 +46,14 @@ public class MappingService {
             }
             result.add(new Product(productAttribute.getVersion(), productAttribute.getEdition(), entry.getValue()));
         }
-        return result.stream().sorted(Comparator.comparing(Product::getVersion)).collect(Collectors.toList());
+        return result;
+    }
+
+    public Map<String, Integer> countProducts(List<String> productList) {
+        Map<String, Integer> productCount = new HashMap<>();
+        for (String produceCode : productList) {
+            productCount.merge(produceCode, 1, Integer::sum);
+        }
+        return productCount;
     }
 }

@@ -10,8 +10,6 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 public class MappingServiceTest {
     private MappingService mappingService;
 
@@ -21,7 +19,7 @@ public class MappingServiceTest {
     }
 
     @Test
-    public void mapProducts() throws Exception {
+    public void processMapping() throws Exception {
         List<String> productList = List.of("CVCD", "SDFD", "DDDF", "SDFD");
         Map<String, ProductAttribute> mapping = Map.ofEntries(
                 Map.entry("CVCD", new ProductAttribute(1, "X")),
@@ -31,17 +29,31 @@ public class MappingServiceTest {
         List<Product> expected = List.of(new Product(1, "X", 1),
                 new Product(1, 1),
                 new Product(2, "Z", 2));
-        List<Product> products = mappingService.mapProducts(productList, mapping);
+        List<Product> products = mappingService.processMapping(productList, mapping);
         Assert.assertEquals(expected, products);
     }
 
     @Test(expected = MappingException.class)
-    public void mapProductsWithIncorrectData_expectMappingException() throws Exception {
+    public void processMappingWithIncorrectData_expectMappingException() throws Exception {
         List<String> productList = List.of("CVCD", "SDFD", "DDDF", "SDFD");
         Map<String, ProductAttribute> mapping = Map.ofEntries(
                 Map.entry("CVCD", new ProductAttribute(1, "X")),
                 Map.entry("DDDF", new ProductAttribute(1))
         );
-        mappingService.mapProducts(productList, mapping);
+        mappingService.processMapping(productList, mapping);
+    }
+
+    @Test
+    public void countProducts(){
+        List<String> productList = List.of("CVCD", "SDFD", "DDDF", "SDFD");
+        Map<String, Integer> expected = Map.ofEntries(
+                Map.entry("CVCD", 1),
+                Map.entry("SDFD", 2),
+                Map.entry("DDDF", 1)
+        );
+        Map<String, Integer> productCount = mappingService.countProducts(productList);
+        Assert.assertEquals(expected, productCount);
+
+
     }
 }

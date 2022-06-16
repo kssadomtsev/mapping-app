@@ -21,6 +21,9 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public Product() {
+    }
+
     public Integer getVersion() {
         return version;
     }

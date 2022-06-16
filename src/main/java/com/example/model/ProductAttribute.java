@@ -18,6 +18,9 @@ public class ProductAttribute {
         this.version = version;
     }
 
+    public ProductAttribute() {
+    }
+
     public Integer getVersion() {
         return version;
     }

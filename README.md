@@ -6,6 +6,8 @@ Mapping Application developed by test assignment requirements. Application accep
 * source data file path
 * output data file path
 
+Some test were added in /test directory for avoid manual testing.
+
 Example of source file content:
 ``
 {

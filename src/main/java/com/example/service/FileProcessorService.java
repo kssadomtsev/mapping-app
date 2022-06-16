@@ -1,7 +1,7 @@
 package com.example.service;
 
 
-import com.example.dto.ProductFileDto;
+import com.example.model.ProductFileDto;
 import com.example.model.Product;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
